@@ -1,0 +1,517 @@
+<!-- GPSのデザインを変えられる！！ -->
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="/CSS/map.css">
+<head>
+    <title>Pushpin:text</title>
+    <meta charset="utf-8">
+    <style>body{padding:0;margin:0;background:#ffffff;}h1{padding:0;margin:0;font-size:50%;color:white;}</style>
+</head>
+<body>
+<h1>Pushpin:text</h1>
+<h1 id="myMap" style="position:relative;height: 800px;width: 1400px; float: left;"></h1>
+    <div id="othercontents" >
+        <button id="start">START</button>
+        <button id="delete" style="width:100px; height: 30px;">
+            ピン削除
+        </button>
+        <div id="texts" style="display: flex; flex-direction: column;">
+            <input class="inputbox" id="ans1" type="text" placeholder="①">
+            <input class="inputbox" id="ans2" type="text" placeholder="②">
+            <input class="inputbox" id="ans3" type="text" placeholder="③">
+            <input class="inputbox" id="ans4" type="text" placeholder="④">
+            <input class="inputbox" id="ans5" type="text" placeholder="⑤">
+        </div>
+
+        <button id="send">送信</button>
+        <button id="test">テスト</button>
+        <p id="box"></p>
+    </div>
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[?]' async defer></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- <script src="../js/BmapQuery.js"></script> -->
+
+<script>
+
+    function GetMap() {
+        // 以下はブラウザーにマップのセンターの位置を決めて表示する関数
+        let map = new Microsoft.Maps.Map('#myMap', {
+            center: new Microsoft.Maps.Location(35.670,139.70), 
+            mapTypeId: Microsoft.Maps.MapTypeId.terrain,
+            zoom:2,
+        });
+        // マップに複数のピンを打つ時のメソッド　→ 変数pinsに代入
+        var pins = new Microsoft.Maps.EntityCollection();
+        //各ピンのロケーション情報（緯度経度）を取得、変数（center、second）に代入
+            const center = map.getCenter();
+
+            const pin0 = new Microsoft.Maps.Pushpin(center,{
+                title: 'Microsoft',       //PushPin:title
+                subTitle: 'City Center',  //PushPin:subtitle
+                text: 'G',                //PushPin:text
+                color:"red"
+            });
+            map.entities.push(pin0);
+
+            
+            const array = [
+            {lat:55.44,lon:37.42},//モスクワ
+            {lat:48.52,lon:2.22},
+            {lat:30.03,lon:31.15},//カイロ
+            {lat:40.45,lon:-73.59},//ニューヨーク
+            {lat:-22.53,lon:-43.17},//リオデジャネイロ
+            {lat:-33.53,lon:151.10},//シドニー
+            {lat:34.01,lon:-118.14},//ロスアンゼルス
+            {lat:-33.57,lon:18.27},//ケープタウン
+            {lat:31.22,lon:121.22},//上海
+            {lat:28.33,lon:77.11},//ニューデリー
+            {lat:37.32,lon:126.58},//ソウル
+            {lat:14.36,lon:121.00},//マニラ
+            {lat:25.12,lon:55.17},//ドバイ
+            {lat:38,lon:23.43},//アテネ
+            {lat:41.53,lon:12.3},//ローマ
+            {lat:38.44,lon:9.09},//リスボン
+            {lat:41.385,lon:2.1734},//バルセロナ
+            {lat:51.3,lon:-0.1},//ロンドン
+            {lat:-1.17,lon:36.51},//ナイロビ
+            {lat:64.8,lon:-21.56},//レイキャビク
+            {lat:0.3,lon:-91.04},//ガラパゴス
+
+            ];
+            document.getElementById("start").onclick = function(){
+                $("#box").empty();
+                const copy = array.slice();
+                const selected = [...Array(5)].map(() => copy.splice(Math.floor(Math.random() * copy.length), 1)[0]);
+                console.log(selected);
+                const lat1 = selected[0].lat;
+                const lon1 = selected[0].lon;
+                const location1 = new Microsoft.Maps.Location(lat1,lon1);
+                const pin1 = new Microsoft.Maps.Pushpin(location1,{
+                    color:"blue",
+                    text:"1",
+                    });
+                switch (lat1){
+                    case 55.44:
+                        var ex1 = "モスクワ";
+                        break;
+                    case 48.52:
+                        var ex1 = "パリ";
+                        break;
+                    case 30.03:
+                        var ex1 = "カイロ";
+                        break;
+                    case 40.45:
+                        var ex1 = "ニューヨーク";
+                        break;
+                    case -22.53:
+                        var ex1 = "リオデジャネイロ";
+                        break;
+                    case -33.53:
+                        var ex1 = "シドニー";
+                        break;
+                    case 34.01:
+                        var ex1 = "ロサンゼルス";
+                        break;
+                    case -33.57:
+                        var ex1 = "ケープタウン";
+                        break;
+                    case 31.22:
+                        var ex1 = "上海";
+                        break;
+                    case 28.33:
+                        var ex1 = "ニューデリー";
+                        break;
+                    case 37.32:
+                        var ex1 = "ソウル";
+                        break;
+                    case 14.36:
+                        var ex1 = "マニラ";
+                        break;
+                    case 25.12:
+                        var ex1 = "ドバイ";
+                        break;
+                    case 38:
+                        var ex1 = "アテネ";
+                        break;
+                    case 41.53:
+                        var ex1 = "ローマ";
+                        break;
+                    case 38.44:
+                        var ex1 = "リスボン";
+                        break;
+                    case 41.385:
+                        var ex1 = "バルセロナ";
+                        break;
+                    case 51.3:
+                        var ex1 = "ロンドン";
+                        break;
+                    case -1.17:
+                        var ex1 = "ナイロビ";
+                        break;
+                    case 64.8:
+                        var ex1 = "レイキャビク";
+                        break;
+                    case 0.3:
+                        var ex1 = "ガラパゴス";
+                        break;
+                };
+
+
+                const lat2 = selected[1].lat;
+                const lon2 = selected[1].lon;
+                const location2 = new Microsoft.Maps.Location(lat2,lon2); //シンガポール
+                const pin2 = new Microsoft.Maps.Pushpin(location2,{
+                    color:"blue",
+                    text:"2"
+                    });
+                switch (lat2){
+                    case 55.44:
+                        var ex2 = "モスクワ";
+                        break;
+                    case 48.52:
+                        var ex2 = "パリ";
+                        break;
+                    case 30.03:
+                        var ex2 = "カイロ";
+                        break;
+                    case 40.45:
+                        var ex2 = "ニューヨーク";
+                        break;
+                    case -22.53:
+                        var ex2 = "リオデジャネイロ";
+                        break;
+                    case -33.53:
+                        var ex2 = "シドニー";
+                        break;
+                    case 34.01:
+                        var ex2 = "ロサンゼルス";
+                        break;
+                    case -33.57:
+                        var ex2 = "ケープタウン";
+                        break;
+                    case 31.22:
+                        var ex2 = "上海";
+                        break;
+                    case 28.33:
+                        var ex2 = "ニューデリー";
+                        break;
+                    case 37.32:
+                        var ex2 = "ソウル";
+                        break;
+                    case 14.36:
+                        var ex2 = "マニラ";
+                        break;
+                    case 25.12:
+                        var ex2 = "ドバイ";
+                        break;
+                    case 38:
+                        var ex2 = "アテネ";
+                        break;
+                    case 41.53:
+                        var ex2 = "ローマ";
+                        break;
+                    case 38.44:
+                        var ex2 = "リスボン";
+                        break;
+                    case 41.385:
+                        var ex2 = "バルセロナ";
+                        break;
+                    case 51.3:
+                        var ex2 = "ロンドン";
+                        break;
+                    case -1.17:
+                        var ex2 = "ナイロビ";
+                        break;
+                    case 64.8:
+                        var ex2 = "レイキャビク";
+                        break;
+                    case 0.3:
+                        var ex2 = "ガラパゴス";
+                        break;
+                };
+                console.log(ex2);
+
+                const lat3 = selected[2].lat;
+                const lon3 = selected[2].lon;
+                const location3 = new Microsoft.Maps.Location(lat3,lon3); //モスクワ
+                const pin3 = new Microsoft.Maps.Pushpin(location3,{
+                    color:"blue",
+                    text:"3"
+                    });
+                switch (lat3){
+                    case 55.44:
+                        var ex3 = "モスクワ";
+                        break;
+                    case 48.52:
+                        var ex3 = "パリ";
+                        break;
+                    case 30.03:
+                        var ex3 = "カイロ";
+                        break;
+                    case 40.45:
+                        var ex3 = "ニューヨーク";
+                        break;
+                    case -22.53:
+                        var ex3 = "リオデジャネイロ";
+                        break;
+                    case -33.53:
+                        var ex3 = "シドニー";
+                        break;
+                    case 34.01:
+                        var ex3 = "ロサンゼルス";
+                        break;
+                    case -33.57:
+                        var ex3 = "ケープタウン";
+                        break;
+                    case 31.22:
+                        var ex3 = "上海";
+                        break;
+                    case 28.33:
+                        var ex3 = "ニューデリー";
+                        break;
+                    case 37.32:
+                        var ex3 = "ソウル";
+                        break;
+                    case 14.36:
+                        var ex3 = "マニラ";
+                        break;
+                    case 25.12:
+                        var ex3 = "ドバイ";
+                        break;
+                    case 38:
+                        var ex3 = "アテネ";
+                        break;
+                    case 41.53:
+                        var ex3 = "ローマ";
+                        break;
+                    case 38.44:
+                        var ex3 = "リスボン";
+                        break;
+                    case 41.385:
+                        var ex3 = "バルセロナ";
+                        break;
+                    case 51.3:
+                        var ex3 = "ロンドン";
+                        break;
+                    case -1.17:
+                        var ex3 = "ナイロビ";
+                        break;
+                    case 64.8:
+                        var ex3 = "レイキャビク";
+                        break;
+                    case 0.3:
+                        var ex3 = "ガラパゴス";
+                        break;
+                };
+                console.log(ex3);
+
+                const lat4 = selected[3].lat;
+                const lon4 = selected[3].lon;
+                const location4 = new Microsoft.Maps.Location(lat4,lon4); //パリ
+                const pin4 = new Microsoft.Maps.Pushpin(location4,{
+                    color:"blue",
+                    text:"4"
+                    });
+                switch (lat4){
+                    case 55.44:
+                        var ex4 = "モスクワ";
+                        break;
+                    case 48.52:
+                        var ex4 = "パリ";
+                        break;
+                    case 30.03:
+                        var ex4 = "カイロ";
+                        break;
+                    case 40.45:
+                        var ex4 = "ニューヨーク";
+                        break;
+                    case -22.53:
+                        var ex4 = "リオデジャネイロ";
+                        break;
+                    case -33.53:
+                        var ex4 = "シドニー";
+                        break;
+                    case 34.01:
+                        var ex4 = "ロサンゼルス";
+                        break;
+                    case -33.57:
+                        var ex4 = "ケープタウン";
+                        break;
+                    case 31.22:
+                        var ex4 = "上海";
+                        break;
+                    case 28.33:
+                        var ex4 = "ニューデリー";
+                        break;
+                    case 37.32:
+                        var ex4 = "ソウル";
+                        break;
+                    case 14.36:
+                        var ex4 = "マニラ";
+                        break;
+                    case 25.12:
+                        var ex4 = "ドバイ";
+                        break;
+                    case 38:
+                        var ex4 = "アテネ";
+                        break;
+                    case 41.53:
+                        var ex4 = "ローマ";
+                        break;
+                    case 38.44:
+                        var ex4 = "リスボン";
+                        break;
+                    case 41.385:
+                        var ex4 = "バルセロナ";
+                        break;
+                    case 51.3:
+                        var ex4 = "ロンドン";
+                        break;
+                    case -1.17:
+                        var ex4 = "ナイロビ";
+                        break;
+                    case 64.8:
+                        var ex4 = "レイキャビク";
+                        break;
+                    case 0.3:
+                        var ex4 = "ガラパゴス";
+                        break;
+                };
+                console.log(ex4);
+
+                const lat5 = selected[4].lat;
+                const lon5 = selected[4].lon;
+                const location5 = new Microsoft.Maps.Location(lat5,lon5); //ニューヨーク
+                const pin5 = new Microsoft.Maps.Pushpin(location5,{
+                    color:"blue",
+                    text:"5"
+                    });
+                switch (lat5){
+                    case 55.44:
+                        var ex5 = "モスクワ";
+                        break;
+                    case 48.52:
+                        var ex5 = "パリ";
+                        break;
+                    case 30.03:
+                        var ex5 = "カイロ";
+                        break;
+                    case 40.45:
+                        var ex5 = "ニューヨーク";
+                        break;
+                    case -22.53:
+                        var ex5 = "リオデジャネイロ";
+                        break;
+                    case -33.53:
+                        var ex5 = "シドニー";
+                        break;
+                    case 34.01:
+                        var ex5 = "ロサンゼルス";
+                        break;
+                    case -33.57:
+                        var ex5 = "ケープタウン";
+                        break;
+                    case 31.22:
+                        var ex5 = "上海";
+                        break;
+                    case 28.33:
+                        var ex5 = "ニューデリー";
+                        break;
+                    case 37.32:
+                        var ex5 = "ソウル";
+                        break;
+                    case 14.36:
+                        var ex5 = "マニラ";
+                        break;
+                    case 25.12:
+                        var ex5 = "ドバイ";
+                        break;
+                    case 38:
+                        var ex5 = "アテネ";
+                        break;
+                    case 41.53:
+                        var ex5 = "ローマ";
+                        break;
+                    case 38.44:
+                        var ex5 = "リスボン";
+                        break;
+                    case 41.385:
+                        var ex5 = "バルセロナ";
+                        break;
+                    case 51.3:
+                        var ex5 = "ロンドン";
+                        break;
+                    case -1.17:
+                        var ex5 = "ナイロビ";
+                        break;
+                    case 64.8:
+                        var ex5 = "レイキャビク";
+                        break;
+                    case 0.3:
+                        var ex5 = "ガラパゴス";
+                        break;
+                }
+                console.log(ex5);
+
+                console.log([ex1,ex2,ex3,ex4,ex5]);
+
+                let data1 = "";
+                let data2 = "";
+                let data3 = "";
+                let data4 = "";
+                let data5 = "";
+                let sum = "";
+
+                document.getElementById("send").onclick = function(){
+                    let ans1 = document.getElementById("ans1").value;
+                    if (ans1 === ex1){
+                        data1 = 1;
+                    }else{
+                        data1 = 0;
+                    };
+                    console.log(data1);
+
+                    let ans2 = document.getElementById("ans2").value;
+                    if (ans2 === ex2){
+                        data2 = 1;
+                    }else{
+                        data2 = 0;
+                    };
+                    console.log(data2);
+
+                    let ans3 = document.getElementById("ans3").value;
+                    if (ans3 === ex3){
+                        data3 = 1;
+                    }else{
+                        data3 = 0;
+                    };
+                    console.log(data3);
+
+                    let ans4 = document.getElementById("ans4").value;
+                    if (ans4 === ex4){
+                        data4 = 1;
+                    }else{
+                        data4 = 0;
+                    };
+                    console.log(data4);
+
+                    let ans5 = document.getElementById("ans5").value;
+                    if (ans5 === ex5){
+                        data5 = 1;
+                    }else{
+                        data5 = 0;
+                    };
+                    console.log(data5);
+                    sum = data1+data2+data3+data4+data5;
+                    console.log(sum);
+                    $("#box").append(sum);
+            };
+                pins.push([pin1,pin2,pin3,pin4,pin5])
+                map.entities.push(pins);
+                console.log(map.entities);
+            };
+            };
+
+</script>
+</body>
+</html>
